@@ -1,10 +1,48 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Untitled Document</title>
-</head>
 
-<body>
-</body>
-</html>
+<?php
+
+$db=new mysqli;
+$db->connect("localhost","root","","crud");
+if(!$db){
+die('error').'<br>';
+}
+/*
+//echo 'connected successfully!'.'<br>';
+//$sql="select * from tasks";
+//$rows=$db->query($sql);
+//while($row=$rows->fetch_assoc()){
+//echo $row['id'].'.'.'&nbsp;';
+//echo $row['name']."<br>";
+//};
+*/
+?>
+
+
+<?php
+
+//$link = mysqli_connect("localhost", "root", "", "crud");
+
+/* check connection */
+//if (mysqli_connect_errno()) {
+//    echo "Connect failed";
+//}
+
+//$query = "SELECT * FROM tasks";
+
+//if ($result = mysqli_query($link, $query)) {
+
+    /* fetch associative array */
+  //  while ($row = mysqli_fetch_assoc($result)) {
+    //    echo $row["id"].'.'.'&nbsp;';
+	//	echo $row["name"].'<br>';
+    //}
+
+    /* free result set */
+  //  mysqli_free_result($result);
+//}
+
+/* close connection */
+//mysqli_close($link);
+
+
+?>

@@ -1,4 +1,10 @@
 <!DOCTYPE html>
+<?php 
+include 'db.php'; 
+$sql="select * from tasks";
+$rows=$db->query($sql);
+?>
+
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="style.css">
@@ -30,12 +36,13 @@
                 <h4 class="modal-title">Add TODO</h4>
               </div>
               <div class="modal-body">
-                <form>
+                <form method="post" action="add.php">
                   <div class="form-group">
                     <label> Todo Name: </label>
-                    <input type="text" required name="todo" class="form-control" />
+                    <input type="text" required name="task" class="form-control" />
                   </div>
-                  <input type="submit" name="send" value="send" class="btn btn-success" />
+                  <input type="submit" name="send" value="Add" class="btn btn-success" />
+                  
                 </form>
               </div>
               <div class="modal-footer">
@@ -46,17 +53,27 @@
         </div>
         <thead>
           <tr>
-            <th scope="col">No.</th>
+            <th scope="col">ID</th>
             <th scope="col">Todo</th>
           </tr>
         </thead>
         <tbody>
+        
           <tr>
-            <th scope="row">1</th>
-            <td class="col-md-10">Mark</td>
-            <td><a href="" class="btn btn-success">Edit</a></td>
-            <td><a href="" class="btn btn-danger">Remove</a></td>
+         
+          <?php
+		  
+		   //Showing MySQL DB in PHP with PHP
+		  while($row=$rows->fetch_assoc()):
+		 
+		 ?>      
+            <th scope="row"><?php echo $row['id']?></th>
+            <td contenteditable='true' class="
+            col-md-10"><?php echo $row['name']?></td>
+            <td><a href="update.php?id=<?php echo $row['id'];?>" class="btn btn-success">Edit</a></td>
+            <td><a href="delete.php?id=<?php echo $row['id']; ?>" class="btn btn-danger">Remove</a></td>
           </tr>
+           <?php endwhile; ?>
         </tbody>
       </table>
     </div>

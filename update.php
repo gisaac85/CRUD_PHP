@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <?php 
 include 'db.php'; 
-$id=$_GET['id'];
+$id=(int)$_GET['id'];
 $sql="select * from tasks where id='$id'";
 $rows=$db->query($sql);
 $row=$rows->fetch_assoc();
 if(isset($_POST['send']))
 {
-$task=$_POST['task'];
+$task=htmlspecialchars($_POST['task']);
 $sql="UPDATE tasks SET name='$task' WHERE id='$id'";
 $rows=$db->query($sql);
 header('location:index.php');
@@ -39,7 +39,8 @@ header('location:index.php');
 		   ?>
            class="form-control" />
         </div>
-        <input type="submit" name="send" value="Update Todo" class="btn btn-success" />
+        <input type="submit" name="send" value="Update Todo" class="btn btn-success" /> &nbsp;
+        <a href="index.php" class="btn btn-warning">Back</a>
       </form>
         
      

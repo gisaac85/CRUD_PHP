@@ -2,8 +2,8 @@
 <?php 
 include 'db.php'; 
 
-$page=(isset($_GET['page'])? $_GET['page']:1);
-$perPage=(isset($_GET['per-page'])&&($_GET['per-page'])<=50 ? $_GET['per-page']:5);
+$page=(isset($_GET['page'])? (int)$_GET['page']:1);
+$perPage=(isset($_GET['per-page'])&&((int)$_GET['per-page'])<=50 ? (int)$_GET['per-page']:5);
 $start=($page >1 ) ? ($page*$perPage)-$perPage:0;
 
 $sql="select * from tasks limit ".$start.",".$perPage." ";
@@ -28,9 +28,9 @@ $rows=$db->query($sql);
 <div class="container">
   <div class="row" style="margin-top:70px;">
     <div class="col-md-10 col-md-offset-1">
-      <table class="table">
+      <table class="table table-hover">
         <button type="button" data-target="#myModal" data-toggle="modal" class="btn btn-success">Add Todo</button>
-        <button type="button" class="btn btn-default btn-style">Print</button>
+        <button type="button" class="btn btn-default btn-style" onClick="print()">Print</button>
         <hr>
         <br>
         <!-- Modal -->

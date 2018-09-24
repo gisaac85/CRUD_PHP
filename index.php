@@ -1,13 +1,21 @@
 <!DOCTYPE html>
 <?php 
 include 'db.php'; 
-$sql="select * from tasks";
+
+$page=(isset($_GET['page'])? $_GET['page']:1);
+$perPage=(isset($_GET['per-page'])&&($_GET['per-page'])<=50 ? $_GET['per-page']:5);
+$start=($page >1 ) ? ($page*$perPage)-$perPage:0;
+
+$sql="select * from tasks limit ".$start.",".$perPage." ";
+$total=$db->query("select * from tasks")->num_rows;
+$pages=ceil($total/$perPage);
+
 $rows=$db->query($sql);
 ?>
-
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="style.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
@@ -42,7 +50,6 @@ $rows=$db->query($sql);
                     <input type="text" required name="task" class="form-control" />
                   </div>
                   <input type="submit" name="send" value="Add" class="btn btn-success" />
-                  
                 </form>
               </div>
               <div class="modal-footer">
@@ -58,24 +65,33 @@ $rows=$db->query($sql);
           </tr>
         </thead>
         <tbody>
-        
           <tr>
-         
-          <?php
+            <?php
 		  
 		   //Showing MySQL DB in PHP with PHP
 		  while($row=$rows->fetch_assoc()):
 		 
-		 ?>      
+		 ?>
             <th scope="row"><?php echo $row['id']?></th>
-            <td contenteditable='true' class="
-            col-md-10"><?php echo $row['name']?></td>
+            <td class="col-md-10"><?php echo $row['name']?></td>
             <td><a href="update.php?id=<?php echo $row['id'];?>" class="btn btn-success">Edit</a></td>
             <td><a href="delete.php?id=<?php echo $row['id']; ?>" class="btn btn-danger">Remove</a></td>
           </tr>
-           <?php endwhile; ?>
+          <?php endwhile; ?>
         </tbody>
       </table>
+      <center>
+        
+          <ul class="pagination justify-content-center">
+            <?php for($i=1;$i<=$pages;$i++): ?>
+            <li class="page-item"> 
+            <a class="page-link" href="?page=<?php echo $i;?>&per-page=<?php echo $perPage;?>"><?php echo $i;?>
+			 </a>
+            </li>
+            <?php endfor; ?>
+          </ul>
+        
+      </center>
     </div>
   </div>
 </div>
